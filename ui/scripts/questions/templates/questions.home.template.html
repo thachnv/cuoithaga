@@ -1,0 +1,54 @@
+<div class="questions-container">
+    <div class="questions-wrapper">
+        <div class="post-question-box box heading row">
+            <div class="icon pull-left">
+                <i class="fa fa-lg fa-magic"></i>
+            </div>
+            <div class="slogan pull-left">
+                <b>Hãy cùng nhau <a href ng-click="index.toHomePage()">Cười Thả Ga</a> nhé.</b>
+            </div>
+            <div class="socials-wrapper pull-left">
+                <div class="fb-like" data-href="https://www.facebook.com/giaitri.sok.vn" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+            </div>
+        </div>
+        <div ng-include="questions.currentMode.template"></div>
+        <a class="view-all" href="/all">Xem tất cả câu hỏi</a>
+    </div>
+    <div class="questions-sidebar-right" >
+        <div class="other-info box">
+            <ul>
+                <li class="has-children">
+                    <div class="item item-head">
+                        <i class="fa fa-lg fa-hand-o-right"></i>
+                        <span>Truy cập nhanh</span>/
+                        <span><a href="/">Trang chủ</a></span>
+                    </div>
+                    <ul>
+                        <li ng-repeat="post in questions.recommendedPosts">
+                            <a ng-href="{{'/view/' + post.link}}" class="thumbnail">
+                                <div class="img-wrapper">
+                                    <img ng-if="post.media.media_type === 'image/gif'" ng-src="{{post.media.previewImageSrc}}"/>
+                                    <img ng-if="post.media.media_type === 'image/jpeg' || post.media.media_type === 'image/bmp'|| post.media.media_type === 'image/png'" ng-src="{{post.media.imageSrc}}"/>
+                                    <img ng-if="post.media.media_type === 'video/youtube'" ng-src="https://img.youtube.com/vi/{{post.media.youtubeId}}/0.jpg"/>
+                                </div>
+                                <!--<div class="title">{{post.title}}</div>-->
+                                <div class="caption">
+                                    <div class="title">{{post.title}}</div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="other-info box" fix-on-scroll="54" style="width: 300px">
+            <div>
+                <a style="font-weight: bold" href ng-click="index.toHomePage()">
+                    <img style="width: 25px" src="/ui/images/icons/nacdanh.png"/>
+                    cuoithaga.com
+                </a>
+                <div class="fb-like" data-href="https://www.facebook.com/giaitri.sok.vn" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+            </div>
+        </div>
+    </div><!-- side bar -->
+</div>

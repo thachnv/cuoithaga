@@ -1,0 +1,55 @@
+<div id="product-detail" class="product-detail">
+    <div class="change-view-control clickable">
+        <i ng-click="showPreviousProduct(productIndex)" class="fa fa-2x fa-chevron-left"></i>
+    </div>
+    <div class="product-detail-thumbnails">
+        <div ng-repeat="image in product.images" class="product-detail-thumbnail-item" ng-click="selectImage(image)">
+            <a class="thumbnail" ng-class="{'active': image.url === selectedImage.url}">
+                <img ng-src="{{image.thumbnail}}"/>
+            </a>
+        </div>
+    </div>
+    <div class="product-detail-image-info-wrapper">
+        <div class="product-detail-selected-image">
+            <img ng-src="{{selectedImage.url || getPrimaryImage(product).url}}"/>
+        </div>
+        <div class="product-detail-information">
+            <div class="sizes">
+                <div class="horizontal-style">
+                    <div>Available Sizes</div>
+                    <div>{{:: product.sizes.join(' ') }}</div>
+                </div>
+                <div class="vertical-style">
+                    <span>Available Sizes</span>
+                    <ul>
+                        <li ng-repeat="size in product.sizes">
+                            {{size}}
+                        </li>
+                    </ul>
+                </div>
+                <div class="horizontal-style">
+                    <span>Available Colors :</span>
+                    <span>{{:: product.colors.join(', ') }}</span>
+                </div>
+                <div class="vertical-style">
+                    <div>Available Colors</div>
+                    <ul>
+                        <li ng-repeat="size in product.colors">
+                            {{size}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="rating">
+                <sq-rating ng-model="product.raiting"></sq-rating>
+            </div>
+            <div class="title">{{ product.title }}</div>
+            <div class="price">{{:: formatMoney(product.price) }}</div>
+            <div class="brand">{{:: product.brand.toUpperCase() }}</div>
+
+        </div>
+    </div>
+    <div class="change-view-control clickable">
+        <i ng-click="showNextProduct(productIndex)" class="fa fa-2x fa-chevron-right"></i>
+    </div>
+</div>

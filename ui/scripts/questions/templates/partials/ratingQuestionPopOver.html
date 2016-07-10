@@ -1,0 +1,12 @@
+<div class="popover" style="width: 300px; max-width: 300px; height: 217px" role="tooltip">
+    <div class="arrow"></div>
+    <h3 class="popover-title">Tại sao bài này tệ</h3>
+
+    <div class="popover-content">
+        <textarea style="resize: none" class="form-control" ng-model="comment_for_bad_comment" rows="5"></textarea>
+        <button style="margin-top: 10px; margin-bottom: 10px" class="btn btn-primary pull-right popover-close"
+                ng-click="question.rateBadQuestion(comment_for_bad_comment)">Gửi
+        </button>
+    </div>
+</div>
+

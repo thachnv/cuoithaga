@@ -1,0 +1,106 @@
+<div class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Đăng Bài</h4>
+            </div>
+            <div class="modal-body">
+                <div ng-show="index.showPostSuccess" class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    <span ng-bind="index.postSuccessMsg"></span>
+                    <button class="btn btn-primary" ng-click="index.showPostForm()">Đăng bài khác</button>
+                </div>
+                <div ng-show="!index.showPostSuccess" class="ask-now-container clearfix">
+                    <div class="clearfix"></div>
+                    <div class="alert alert-danger" role="alert" ng-show="index.postError" id="post-error">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        {{index.postErrorMsg}}
+                    </div>
+                    <form class="form-horizontal clearfix">
+                        <div class="form-group">
+                            <label class="col-xs-12">Chuyên mục</label>
+                            <div class="col-xs-12">
+                                <select class="form-control" ng-model="index.currentPost.category" ng-options="category.key as category.name for category in index.CATEGORY_TYPES">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label class="radio-inline" for="image-media">
+                                    <input id="image-media" ng-model="index.postingMediaType" value="image" type="radio"/>
+                                    Hình ảnh (gif, jpg, png)
+                                </label>
+                                <label class="radio-inline" for="youtube-media">
+                                    <input id="youtube-media" ng-model="index.postingMediaType" value="youtube" type="radio"/>
+                                    Clip youtube
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <input ng-model="index.currentPost.title" placeholder="Điền tựa đề ở đây"
+                                       class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="index.postingMediaType === index.MEDIA_TYPES.IMAGE">
+                            <div class="col-xs-12">
+                                <div class="img">
+                                    <!--<div class="thumbnail" ng-show="index.dataUrls[0] || index.imgSrc">-->
+                                    <div class="file-drag thumbnail" file-drag on-file-select="index.onFileSelect">
+                                        <div class="place-holder" ng-show="!index.dataUrls[0] && !index.imgSrc">Kéo thả hình ảnh vào đây</div>
+                                        <img ng-show="index.dataUrls[0] || index.imgSrc" ng-src="{{ index.imgSrc ? index.imgSrc : index.dataUrls[0]}}">
+                                    </div>
+                                    <div>
+                                        <button class="btn btn-primary" ng-file-select="index.onFileSelect($files)">
+                                            Chọn hình ảnh từ máy
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="index.postingMediaType === index.MEDIA_TYPES.YOUTUBE">
+                            <div class="col-xs-12">
+                                <div class="img">
+                                    <div class="thumbnail" ng-if="index.youtubeUrl">
+                                        <iframe ng-src="{{index.youtubeUrl}}" height="240" width="320" allowfullscreen="" frameborder="0"></iframe>                                    </div>
+                                    <div>
+                                        <input placeholder="Dán link của clip youtube vào đây" ng-model="index.youtubeRawUrl" class="form-control"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <textarea bind-ckeditor="70" ng-model="index.currentPost.content"
+                                          placeholder="Nội dung (có thể bỏ trống nếu đăng hình ảnh/clip)" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="member-indentity" class="col-xs-12 clickable">
+                                <input id="member-indentity" ng-disabled="!index.currentUser" type="radio"
+                                       ng-model="index.postingIdentity" value="member"/>
+                                Dùng Tài khoản hiện tại
+                            </label>
+                            <label for="anonymous-indentity" class="col-xs-12 clickable">
+                                <input id="anonymous-indentity" type="radio" ng-model="index.postingIdentity" value="anonymous"/>
+                                Nặc Danh
+                            </label>
+                        </div>
+                    </form>
+                    <div class="part-spinner-container" ng-if="index.posting">
+                        <div class="spinner">
+                            <div>Bài viết đang được tải lên</div>
+                            <i class="fa fa-3x fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="index.post()">Đăng</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

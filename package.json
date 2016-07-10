@@ -1,0 +1,31 @@
+{
+  "name": "bookzone",
+  "description": "Blue",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "bcrypt-nodejs": "*",
+    "body-parser": "*",
+    "connect-flash": "*",
+    "connect-redis": "*",
+    "cookie-parser": "*",
+    "easyimage": "^1.0.3",
+    "ejs": "*",
+    "express": "4.x",
+    "express-session": "*",
+    "gm": "^1.17.0",
+    "imagemagick": "^0.1.3",
+    "method-override": "*",
+    "mongoose": "*",
+    "multiparty": "*",
+    "node-uuid": "*",
+    "passport": "latest",
+    "passport-facebook": "latest",
+    "passport-google-oauth": "^0.1.5",
+    "passport-local": "latest",
+    "phantomjs": "*",
+    "underscore": "^1.7.0",
+    "winston": "^0.8.3",
+    "yuicompressor": "*"
+  }
+}

@@ -1,0 +1,84 @@
+<div class="img" ng-controller="EmoCtrl">
+    <div class="col-xs-3 thumbnail" ng-show="emo.dataUrls[0]">
+        <img ng-src="{{emo.dataUrls[0]}}">
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>List of all emoticons</h4>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table ng-table="emo.tableParams" show-filter="true" class="table table-striped table-bordered">
+                    <tr ng-repeat="e in $data">
+                        <td data-title="'#'">
+                            {{ $index + 1 }}
+                        </td>
+                        <td data-title="'Preview'" filter="{ 'path': 'text' }" sortable="'path'">
+                            <img ng-src="{{e.path}}"/>
+                        </td>
+                        <td data-title="'Name'" filter="{ 'name': 'text' }" sortable="'name'">
+                            <span ng-show="!e.$editing">{{e.name}}</span>
+                            <input class="form-control" ng-show="e.$editing" ng-model="e.name"/>
+                        </td>
+                        <td data-title="'Shortcut'" filter="{ 'shortcut': 'text' }" sortable="'shortcut'">
+                            <span ng-show="!e.$editing">{{e.shortcut}}</span>
+                            <input class="form-control" ng-show="e.$editing" ng-model="e.shortcut"/>
+                        </td>
+                        <td data-title="'Control'" class="control-column">
+                            <button class="btn btn-default" ng-if="!e.$editing" ng-click="e.$editing = true"><i
+                                    class="fa fa-edit"></i></button>
+                            <button class="btn btn-default" ng-if="e.$editing" ng-click="e.$editing = false; emo.updateEmo(e)"><i
+                                    class="fa fa-save"></i></button>
+                            <button class="btn btn-default" ng-click="emo.deleteEmo(e)"><i
+                                    class="fa fa-trash-o"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">
+                            <div class="pull-right">
+                                <button class="btn btn-default" ng-file-select="emo.onFileSelect($files)" multiple
+                                        accept="image/*">Select File
+                                </button>
+                                <button class="btn btn-primary" ng-disabled="emo.uploading" ng-click="emo.startUpload()">Upload</button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <!--<table class="table table-striped table-bordered">-->
+                <!--<thead>-->
+                <!--<tr>-->
+                <!--<th>#</th>-->
+                <!--<th>name</th>-->
+                <!--<th>preview</th>-->
+                <!--<th>shortcut</th>-->
+                <!--<th style="width: 110px">Control</th>-->
+                <!--</tr>-->
+                <!--</thead>-->
+                <!--<tbody>-->
+                <!--<tr ng-repeat="e in emo.list">-->
+                <!--<td>{{ $index + 1 }}</td>-->
+                <!--<td><input ng-model="e.name"/></td>-->
+                <!--<td><img ng-src="{{e.path}}"/></td>-->
+                <!--<td><input ng-model="e.shortcut"/></td>-->
+                <!--<td>-->
+                <!--<button class="btn btn-default" ng-click="emo.updateEmo(e)"><i-->
+                <!--class="fa fa-edit"></i></button>-->
+                <!--<button class="btn btn-default" ng-click="emo.deleteEmo(e)"><i-->
+                <!--class="fa fa-trash-o"></i></button>-->
+                <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                <!--<td colspan="6">-->
+                <!--<div class="pull-right">-->
+                <!--<button class="btn btn-default" ng-file-select="emo.onFileSelect($files)" multiple accept="image/*">Select File</button>-->
+                <!--<button class="btn btn-primary" ng-click="emo.startUpload()">Upload</button>-->
+                <!--</div>-->
+                <!--</td>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+                <!--</table>-->
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,15 @@
+<div class="container box">
+    <div class="row">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2" ng-repeat="meme in imageHome.list">
+            <div class="thumbnail" >
+                <a href="/che-anh/{{meme._id}}" style="display: block; height: 250px; overflow: hidden">
+                    <img ng-src="{{meme.path}}"/>
+                </a>
+                <div class="caption" style="height: 40px">
+                    <div ng-bind="meme.name" style="font-weight: bold"></div>
+                    <!--<p ng-bind="meme.description"></p>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

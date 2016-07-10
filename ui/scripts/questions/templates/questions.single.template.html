@@ -1,0 +1,130 @@
+<div ng-controller="QuestionsSingleCtrl">
+    <div class="view-single-question box row">
+        <div class="question-container clearfix">
+            <!--<button class="btn btn-success pull-right">Bài Kế</button>-->
+            <div class="question-body">
+                <div class="profile clearfix">
+                    <a class="thumbnail">
+                        <img ng-src="{{question.getAva(question.data.post.createdBy)}}">
+                    </a>
+                    <div class="info">
+                        <div class="name">
+                            <a ng-bind="question.getName(question.data.post.createdBy)"></a>
+                            <span class="user-data">
+                                <i class="fa fa-heart"></i>
+                                <span ng-bind="question.data.post.createdBy.rating"></span>
+                            </span>
+                        </div>
+                        <div class="meta-info">
+                            <span>
+                                {{question.data.post.goodRatings.length - question.data.post.badRatings.length}} điểm
+                            </span>
+                            <span class="item" ng-bind="question.getDate(question.data.post.createdDate)"></span>
+                        </div>
+                    </div>
+                </div><!-- User profile -->
+
+                <div class="content-wrapper">
+                    <h4 class="title" ng-bind="question.data.post.title"></h4>
+                    <div class="post-img clickable" style="text-align: center" ng-if="question.data.post.media.media_type === 'image/gif'">
+                        <video preload="none" poster="{{question.data.post.media.previewImageSrc}}" loop="" style="width: 100%">
+                            <source ng-src="{{question.data.post.media.webmSrc}}" type="video/webm">
+                            <source ng-src="{{question.data.post.media.mp4Src}}" type="video/mp4">
+                        </video>
+                        <div class="play-button">
+                            <i class="fa fa-play"></i>
+                        </div>
+                    </div>
+                    <div class="post-img" ng-if="question.data.post.media.media_type === 'image/jpeg' || question.data.post.media.media_type === 'image/bmp'|| question.data.post.media.media_type === 'image/png'">
+                        <img ng-src="{{question.data.post.media.imageSrc}}"/>
+                    </div>
+                    <div class="post-img" ng-if="question.data.post.media.media_type === 'video/youtube'">
+                        <iframe ng-src="{{question.youtubeUrl}}" height="390" width="100%" allowfullscreen="" frameborder="0"></iframe>
+                    </div>
+                    <div class="content" ng-bind-html="question.data.post.content | emoticons"></div>
+                </div><!-- Question content -->
+            </div>
+            <div class="question-footer clearfix">
+                <div class="control meta-info pull-right">
+                    <span class="pull-left">
+                        <div class="fb-like" data-href="http://cuoithaga.com/view/{{::question.data.post.link}}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+                    </span>
+
+                    <span ng-if="question.currentUser && question.ratingStatus === question.NEGATIVE" class="item clickable pull-left">
+                        <button class="btn btn-xs btn-success rate-good-btn" ng-click="question.rateGoodQuestion()" >
+                            <i class="fa fa-arrow-up"></i>
+                            Hay
+                        </button>
+                        <button class="btn btn-xs btn-danger rate-bad-btn" ng-click="question.rateBadQuestion()" >
+                            <i class="fa fa-arrow-down"></i>
+                            Dở
+                        </button>
+                        <div class="pull-right">
+                            <div class="count-box">
+                                {{question.goodRatings.length - question.badRatings.length}}
+                                điểm
+                            </div>
+                            <div class="count-box-nub"><s></s><i></i></div>
+                        </div>
+                    </span><!-- Logged in, not rated -->
+
+                    <span ng-if="question.currentUser && (question.ratingStatus === question.GOOD || question.ratingStatus === question.BAD)" class="item clickable pull-left">
+                        <button ng-click="question.unRateQuestion()" class="btn btn-xs btn-success unrate-btn" ng-mouseover="showRemoveRating = true" ng-mouseleave="showRemoveRating = false" ng-if="question.ratingStatus === question.GOOD">
+                            <span ng-show="!showRemoveRating">
+                                <i class="fa fa-check"></i>
+                                Đã đánh giá hay
+                            </span>
+                            <span ng-show="showRemoveRating">
+                                <i class="fa fa-times"></i>
+                                Bỏ đánh giá
+                            </span>
+                        </button>
+                        <button ng-click="question.unRateQuestion()" class="btn btn-xs btn-danger unrate-btn" ng-mouseover="showRemoveRating = true" ng-mouseleave="showRemoveRating = false" ng-if="question.ratingStatus === question.BAD">
+                            <span ng-show="!showRemoveRating">
+                                <i class="fa fa-check"></i>
+                                Đã đánh giá dở
+                            </span>
+                            <span ng-show="showRemoveRating">
+                                <i class="fa fa-times"></i>
+                                Bỏ đánh giá
+                            </span>
+                        </button>
+                        <div class="pull-right">
+                            <div class="count-box">
+                                {{question.data.post.goodRatings.length - question.data.post.badRatings.length}}
+                                điểm
+                            </div>
+                            <div class="count-box-nub"><s></s><i></i></div>
+                        </div>
+                    </span><!-- Logged in, rated -->
+
+                    <span ng-if="!question.currentUser" class="item clickable pull-left">
+                        <button class="btn btn-xs btn-success rate-good-btn" pop-over="/ui/templates/login.popup.template.html">
+                            <i class="fa fa-arrow-up"></i>
+                            Hay
+                        </button>
+                        <button class="btn btn-xs btn-danger rate-bad-btn" pop-over="/ui/templates/login.popup.template.html">
+                            <i class="fa fa-arrow-down"></i>
+                            Dở
+                        </button>
+                        <div class="pull-right">
+                            <div class="count-box">
+                                {{question.data.post.goodRatings.length - question.data.post.badRatings.length}}
+                                điểm
+                            </div>
+                            <div class="count-box-nub"><s></s><i></i></div>
+                        </div>
+                    </span><!-- Not logged in -->
+
+                    <span class="item pull-left" ng-click="question.goToNextPost()">
+                        <button class="btn btn-xs btn-info">
+                            <i class="fa fa-lg fa-arrow-circle-o-right"></i>
+                            Bài Kế
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="fb-comments" data-href="http://cuoithaga.com/view/{{::question.data.post.link}}" data-width="528" data-numposts="10" data-colorscheme="light"></div>
+    </div>
+</div>

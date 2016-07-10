@@ -1,0 +1,52 @@
+<div class="sq-products-view-container">
+    <header class="clearfix">
+        <div class="sort-by-wrapper pull-left">
+            <label for="sort-by">Sort By:</label>
+            <select id="sort-by"
+                    ng-model="currentSortProp"
+                    ng-options="sortProp.key as sortProp.display for sortProp in sortProps"
+                    ng-change="onChangeSortProp()">
+            </select>
+            <div class="sort-order">
+                <i class="fa fa-sort-alpha-asc clickable" ng-click="changeSortOrder()"
+                   ng-show="currentSortOrder === sortOrders.asc"></i>
+                <i class="fa fa-sort-alpha-desc clickable" ng-click="changeSortOrder()"
+                   ng-show="currentSortOrder === sortOrders.desc"></i>
+            </div>
+        </div>
+        <div class="image-size-wrapper pull-right">
+            <label>Image Size:</label>
+            <i class="fa fa-th clickable image-size-option" ng-click="changeImageSize(imageSizes.small)"
+               ng-class="{'active': currentImageSize===imageSizes.small}"></i>
+
+            <i class="fa fa-th-large clickable image-size-option" ng-click="changeImageSize(imageSizes.large)"
+               ng-class="{'active': currentImageSize===imageSizes.large}"></i>
+        </div>
+    </header>
+    <hr>
+    <section class="clearfix">
+        <div ng-repeat="product in productList track by product.id">
+            <div class="col-xs-12 col-sm-6 col-md-3"
+                 ng-class="{'col-md-3 col-sm-6': currentImageSize===imageSizes.large, 'col-md-2 col-sm-4': currentImageSize===imageSizes.small}">
+                <div class="product-view thumbnail">
+                    <div class="product-primary-image">
+                        <img ng-click="onMouseOverProductImage(product, $index)"
+                             class="clickable"
+                             ng-src="{{getPrimaryImage(product).url}}"/>
+                    </div>
+                    <div class="product-information">
+                        <div class="product-title">
+                            {{:: product.title }}
+                        </div>
+                        <div class="product-price">
+                            {{:: formatMoney(product.price) }}
+                        </div>
+                        <div class="product-rating">
+                            <sq-rating ng-model="product.raiting"></sq-rating>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,86 @@
+<div class="container-fluid">
+<div class="sidebar">
+    <div class="sidebar-content">
+        <!-- Main navigation -->
+        <ul class="navigation">
+            <li ng-repeat="m in adminCp.menu" ng-class="m === adminCp.currentMenu ? 'active' : ''" ng-click="adminCp.onMenuClick(m)">
+                <a href><span>{{m.title}}</span> <i ng-class="m.iconClass"></i></a>
+            </li>
+        </ul>
+        <!-- /main navigation -->
+    </div>
+</div>
+<div class="admin-cp-main">
+    <div class="row">
+        <div class="col-xs-12">
+            <div ng-if="adminCp.isAdmin" ng-include="adminCp.currentMenu.templateUrl"></div>
+            <div ng-if="!adminCp.isAdmin">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">
+                                    User Name
+                                </label>
+
+                                <div class="col-xs-7">
+                                    <input class="form-control" ng-model="adminCp.currentLoginInfo.username"/>
+                                </div>
+                            </div><!-- username -->
+
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label">
+                                    Password
+                                </label>
+
+                                <div class="col-xs-7">
+                                    <input class="form-control" ng-model="adminCp.currentLoginInfo.password" type="password"/>
+                                </div>
+                            </div><!-- password -->
+
+                            <div class="form-group">
+                                <label class="col-xs-3 control-label"></label>
+
+                                <div class="col-xs-7">
+                                    <button class="btn btn-primary" ng-click="adminCp.login()">Login</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="form-horizontal">-->
+                <!--<div class="form-group">-->
+                    <!--<label class="control-label col-xs-4">User Name</label>-->
+
+                    <!--<div class="col-xs-5">-->
+                        <!--<input class="form-control" ng-model="user.username"/>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                    <!--<label class="control-label col-xs-4">Password</label>-->
+
+                    <!--<div class="col-xs-5">-->
+                        <!--<input type="password" class="form-control" ng-model="user.password"/>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                    <!--<label class="control-label col-xs-4">Email</label>-->
+
+                    <!--<div class="col-xs-5">-->
+                        <!--<input class="form-control" ng-model="user.email"/>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="form-group">-->
+                    <!--<label class="control-label col-xs-4"></label>-->
+
+                    <!--<div class="col-xs-8">-->
+                        <!--<button class="btn btn-primary" ng-click="user.signUp()">Sign Up</button>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+</div>
+</div>

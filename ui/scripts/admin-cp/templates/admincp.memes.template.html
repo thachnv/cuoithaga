@@ -1,0 +1,59 @@
+<div class="img" ng-controller="MemeManageCtrl">
+    <div class="col-xs-3 thumbnail" ng-show="meme.dataUrls[0]">
+        <img ng-src="{{meme.dataUrls[0]}}">
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>List of all emoticons</h4>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table ng-table="meme.tableParams" show-filter="true" class="table table-striped table-bordered">
+                    <tr ng-repeat="e in $data">
+                        <td data-title="'#'">
+                            {{ $index + 1 }}
+                        </td>
+                        <td data-title="'Preview'" filter="{ 'path': 'text' }" sortable="'path'">
+                            <img style="width: 100px" ng-src="{{e.path}}"/>
+                        </td>
+                        <td data-title="'Name'" filter="{ 'name': 'text' }" sortable="'name'">
+                            <span ng-show="!e.$editing">{{e.name}}</span>
+                            <input class="form-control" ng-show="e.$editing" ng-model="e.name"/>
+                        </td>
+                        <td data-title="'Description'" filter="{ 'shortcut': 'text' }" sortable="'shortcut'">
+                            <span ng-show="!e.$editing">{{e.description}}</span>
+                            <input class="form-control" ng-show="e.$editing" ng-model="e.description"/>
+                        </td>
+                        <td data-title="'Top Text'" filter="{ 'shortcut': 'text' }" sortable="'shortcut'">
+                            <span ng-show="!e.$editing">{{e.topText}}</span>
+                            <input class="form-control" ng-show="e.$editing" ng-model="e.topText"/>
+                        </td>
+                        <td data-title="'Bottom Text'" filter="{ 'shortcut': 'text' }" sortable="'shortcut'">
+                            <span ng-show="!e.$editing">{{e.bottomText}}</span>
+                            <input class="form-control" ng-show="e.$editing" ng-model="e.bottomText"/>
+                        </td>
+                        <td data-title="'Control'" class="control-column">
+                            <button class="btn btn-default" ng-if="!e.$editing" ng-click="e.$editing = true"><i
+                                    class="fa fa-edit"></i></button>
+                            <button class="btn btn-default" ng-if="e.$editing" ng-click="e.$editing = false; meme.updateEmo(e)"><i
+                                    class="fa fa-save"></i></button>
+                            <button class="btn btn-default" ng-click="meme.deleteEmo(e)"><i
+                                    class="fa fa-trash-o"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">
+                            <div class="pull-right">
+                                <button class="btn btn-default" ng-file-select="meme.onFileSelect($files)" multiple
+                                        accept="image/*">Select File
+                                </button>
+                                <button class="btn btn-primary" ng-disabled="meme.uploading" ng-click="meme.startUpload()">Upload</button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>

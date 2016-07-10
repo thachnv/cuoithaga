@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html ng-app="KApp" ng-controller="IndexCtrl">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <meta name="fragment" content="!"/>
+    <base href="/">
+    <title ng-bind="index.title"></title>
+    <link rel="shortcut icon" href="/ui/images/icons/sok_icon.png">
+    <!-- font -->
+
+    <!-- bower component css -->
+    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/bower_components/ng-table/ng-table.min.css"/>
+    <link rel="stylesheet" href="/bower_components/angularjs-toaster/toaster.css"/>
+
+    <!-- our css -->
+    <link rel="stylesheet" href="/ui/css/3d-corner-ribbons.css"/>
+    <link rel="stylesheet" href="/ui/css/admin.css"/>
+    <link rel="stylesheet" href="/ui/css/main.css"/>
+    <link rel="stylesheet" href="/ui/css/myTheme.css"/>
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
+
+
+    <!-- bower components -->
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/ckeditor/ckeditor.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/bower_components/angular/angular.min.js"></script>
+    <script src="/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="/bower_components/ng-file-upload/angular-file-upload.min.js"></script>
+    <script src="/bower_components/ng-table/ng-table.min.js"></script>
+    <script src="/bower_components/angularjs-toaster/toaster.js"></script>
+    <script src="/bower_components/EaselJS/lib/easeljs-0.7.1.min.js"></script>
+    <script src="/ui/scripts/services/kapp.services.js"></script>
+    <script src="/ui/scripts/services/kapp.utils.services.js"></script>
+
+    <!-- build:js sok.min.js -->
+    <script src="/ui/app.js"></script>
+    <script src="/ui/index.controller.js"></script>
+
+    <script src="/ui/components/custom.directives.js"></script>
+    <script src="/ui/components/custom.filters.js"></script>
+    <script src="/ui/components/utility/k.js"></script>
+
+    <script src="/ui/scripts/users/controllers/users.home.controller.js"></script>
+    <script src="/ui/scripts/questions/controllers/questions.home.ctrl.js"></script>
+    <script src="/ui/scripts/questions/controllers/questions.multiple.controller.js"></script>
+    <script src="/ui/scripts/questions/controllers/questions.single.controller.js"></script>
+    <script src="/ui/scripts/images/controllers/images.home.controller.js"></script>
+    <script src="/ui/scripts/images/controllers/images.edit.controller.js"></script>
+    <script src="/ui/scripts/admin-cp/controllers/admincp.controller.js"></script>
+    <script src="/ui/scripts/admin-cp/controllers/admincp.users.controller.js"></script>
+    <script src="/ui/scripts/admin-cp/controllers/admincp.posts.controller.js"></script>
+    <script src="/ui/scripts/admin-cp/controllers/admincp.emoticons.controller.js"></script>
+    <script src="/ui/scripts/admin-cp/controllers/admincp.roles.controller.js"></script>
+    <script src="/ui/scripts/admin-cp/controllers/admincp.comments.controller.js"></script>
+    <script src="/ui/scripts/admin-cp/controllers/admincp.memes.controller.js"></script>
+
+    <script src="/ui/dist/sok.min.js"></script>
+    <!-- endbuild -->
+</head>
+<body>
+<div id="fb-root"></div>
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            appId: 411546052326680,
+            xfbml: true,
+            version: 'v2.1'
+        });
+
+    };
+
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {
+            return;
+        }
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+</script>
+<div class="body-spinner" ng-if="index.loading">
+    <div class="spinner-container" style="">
+        <i class="fa fa-3x fa-spinner fa-spin"></i>
+
+        <div>Vui lòng nhấn F5 nếu phải đợi quá lâu</div>
+    </div>
+</div>
+<!-- Top of everyone muahahahahaha -->
+<!-- content begin -->
+<header class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar-wrapper clearfix">
+        <div class="navbar-head">
+            <a class="navbar-logo" href="/">
+                <img style="" src="/ui/images/icons/logo.png"/>
+            </a>
+        </div>
+        <ul class="navbar-left-menu pull-left">
+            <li ng-class="{'active': index.currentViewMode === 'new'}">
+                <a href="/new">
+                    Mới
+                </a>
+            </li>
+            <li ng-class="{'active': index.currentViewMode === 'hot'}">
+                <a href="/hot">
+                    Hot
+                </a>
+            </li>
+            <li ng-class="{'active': index.currentViewMode === 'following'}">
+                <a href="/following">
+                    Theo Dõi
+                </a>
+            </li>
+        </ul>
+        <ul class="navbar-right-menu pull-right">
+            <!--<li ng-if="!index.currentUser"><a href>Đăng Nhập Với</a></li>-->
+            <li ng-if="!index.currentUser" class="has-children">
+                <span>Đăng Nhập Với</span>
+                <ul class="login-group">
+                    <li>
+                        <button class="btn btn-primary logo-btn">
+                            <i class="fa fa-lg fa-myf2bw"></i>
+                        </button>
+                        <button class="btn btn-danger logo-btn">
+                            <i class="fa fa-lg fa-myg2ow"></i>
+                        </button>
+                        <!--<a ng-if="!index.currentUser" href ng-click="index.facebookLogin()"><i-->
+                                <!--class="fa fa-lg fa-myf2b"></i></a>-->
+                        <!--<a ng-if="!index.currentUser" href ng-click="index.googleLogin()"><i-->
+                                <!--class="fa fa-lg fa-google-plus-square"></i></a>-->
+                    </li>
+                </ul>
+            </li>
+            <li ng-if="index.currentUser" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href role="button" aria-expanded="false" ng-if="index.currentUser.info.logged_with === 'facebook'">
+                    <i class="fa fa-lg fa-myf2b"></i>
+                    <span ng-bind="index.currentUser.info.facebook.name"></span>
+                    <span class="caret"></span>
+                </a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href role="button" aria-expanded="false" ng-if="index.currentUser.info.logged_with === 'local'">
+                    <i class="fa fa-lg fa-user"></i>
+                    <span ng-bind="index.currentUser.info.local.username"></span>
+                    <span class="caret"></span>
+                </a>
+                <a class="dropdown-toggle" data-toggle="dropdown" href role="button" aria-expanded="false" ng-if="index.currentUser.info.logged_with === 'google'">
+                    <i class="fa fa-lg fa-user"></i>
+                    <span ng-bind="index.currentUser.info.google.name"></span>
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li role="presentation" class="disabled"><a href>Hồ sơ cá nhân</a></li>
+                    <li role="presentation"><a href ng-click="index.logout()">Đăng xuất</a></li>
+                </ul>
+            </li>
+            <li>
+                <button class="btn btn-success" show-dialog="/ui/templates/post.dialog.template.html" on-show="index.onShowingPostForm">Đăng Bài</button>
+                <form action="/che-anh">
+                    <input type="submit" class="btn btn-danger" value="Tự Chế Ảnh"/>
+                </form>
+            </li>
+        </ul>
+    </div>
+</header>
+<!-- main content -->
+<main ng-view></main>
+<!-- content end -->
+<toaster-container></toaster-container>
+</body>
+
+</html>

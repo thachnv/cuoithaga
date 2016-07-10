@@ -1,0 +1,69 @@
+<div class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Đăng Bài</h4>
+            </div>
+            <div class="modal-body">
+                <div ng-show="image.showPostSuccess" class="alert alert-success" role="alert">
+                    <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                    <span ng-bind="image.postSuccessMsg"></span>
+                    <button class="btn btn-primary" ng-click="image.showPostForm()">Đăng bài khác</button>
+                </div>
+                <div ng-show="!image.showPostSuccess" class="ask-now-container clearfix">
+                    <div class="clearfix"></div>
+                    <div class="alert alert-danger" role="alert" ng-show="image.postError" id="post-error">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        {{image.postErrorMsg}}
+                    </div>
+                    <form class="form-horizontal clearfix">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <input ng-model="image.currentPost.title" placeholder="Điền tựa đề"
+                                       class="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <div class="img">
+                                    <div class="thumbnail" ng-show="image.output">
+                                        <img ng-src="{{image.output}}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <textarea bind-ckeditor ng-model="image.currentPost.content"
+                                          placeholder="Nội dung câu hỏi" class="form-control"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="member-indentity" class="col-xs-12 clickable">
+                                <input id="member-indentity" ng-disabled="!image.currentUser" type="radio"
+                                       ng-model="image.postingIdentity" value="member"/>
+                                Dùng Tài khoản hiện tại
+                            </label>
+                            <label for="anonymous-indentity" class="col-xs-12 clickable">
+                                <input id="anonymous-indentity" type="radio" ng-model="image.postingIdentity" value="anonymous"/>
+                                Nặc Danh ( Bài sẽ được kiểm duyệt )
+                            </label>
+                        </div>
+                    </form>
+                    <div class="part-spinner-container" ng-if="image.posting">
+                        <div class="spinner">
+                            <div>Bài viết đang được tải lên</div>
+                            <i class="fa fa-3x fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="image.post()">Đăng</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Thoát</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

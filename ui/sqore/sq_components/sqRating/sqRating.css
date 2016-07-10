@@ -1,0 +1,23 @@
+
+.product-rating {
+    position: relative;
+    display: inline-block;
+    /*font-size: 2rem;*/
+}
+
+.product-rating .filled-stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.product-rating .empty-stars > .star {
+    color: #999;
+}
+
+.product-rating .filled-stars .star {
+    color: #fde16d;
+    -webkit-text-stroke: 1px #999;
+}

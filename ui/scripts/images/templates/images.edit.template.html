@@ -1,0 +1,78 @@
+<div class="clearfix box" style="width: 900px; margin-left: auto; margin-right: auto">
+    <div style="width: 600px; float: left">
+        <canvas img-edit img-src="image.input"
+                texts = "image.texts"
+                output="image.output"></canvas>
+    </div>
+    <div style="width: 280px; float: left;">
+        <form class="form-horizontal col-xs-12" role="form">
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <textarea placeholder="Nhập chữ ở trên" rows="4" style="resize: none" class="form-control" ng-model="image.texts[0].content"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <textarea placeholder="Nhập chữ ở dưới" rows="4" style="resize: none" class="form-control" ng-model="image.texts[1].content"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <button class="btn btn-primary" ng-click="index.imgSrc = image.output" show-dialog="/ui/templates/post.dialog.template.html" on-show="index.onShowingPostForm">Đăng ảnh</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <button class="btn btn-primary" ng-click="image.upload()" ng-file-select="image.onFileSelect($files)">Tải lên hình của bạn</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <label class="label label-success" style="font-style: italic">
+                        Mẹo
+                    </label>
+                    <span style="font-style: italic" class="pull-left">
+                        * Dùng chuột kéo chữ về vị trí mong muốn
+                    </span>
+                </div>
+            </div>
+            <!--<div class="form-group" style="height: 400px; overflow: auto">-->
+                <!--<div class="col-xs-6">-->
+                    <!--<a class="thumbnail">-->
+                        <!--<img src="/ui/images/icons/download.png"/>-->
+                    <!--</a>-->
+                    <!--<a class="thumbnail">-->
+                        <!--<img src="/ui/images/icons/download.png"/>-->
+                    <!--</a>-->
+                    <!--<a class="thumbnail">-->
+                        <!--<img src="/ui/images/icons/download.png"/>-->
+                    <!--</a>-->
+                    <!--<a class="thumbnail">-->
+                        <!--<img src="/ui/images/icons/download.png"/>-->
+                    <!--</a>-->
+                    <!--<a class="thumbnail">-->
+                        <!--<img src="/ui/images/icons/download.png"/>-->
+                    <!--</a>-->
+                <!--</div>-->
+                <!--<div class="col-xs-6">-->
+                    <!--<a class="thumbnail">-->
+                        <!--<img src="/ui/images/icons/download.png"/>-->
+                    <!--</a>-->
+                    <!--<a class="thumbnail">-->
+                        <!--<img src="/ui/images/icons/download.png"/>-->
+                    <!--</a>-->
+                    <!--<a class="thumbnail">-->
+                        <!--<img src="/ui/images/icons/download.png"/>-->
+                    <!--</a>-->
+                    <!--<a class="thumbnail">-->
+                        <!--<img src="/ui/images/icons/download.png"/>-->
+                    <!--</a>-->
+                    <!--<a class="thumbnail">-->
+                        <!--<img src="/ui/images/icons/download.png"/>-->
+                    <!--</a>-->
+                <!--</div>-->
+            <!--</div>-->
+        </form>
+    </div>
+</div>

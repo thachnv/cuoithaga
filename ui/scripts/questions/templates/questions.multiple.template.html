@@ -1,0 +1,181 @@
+<div ng-controller="QuestionsMultipleCtrl">
+    <div class="view-questions-box box row" lazy-load="app.loadMore()" is-loading="app.loadingMore">
+        <div class="body">
+            <div ng-repeat="question in app.list track by question._id">
+                <div class="question-display clearfix">
+                    <div class="title">
+                        <i class="fa fa-lg fa-quote-left title-icon"></i>
+                        <span class="title-content">
+                            <a ng-href="{{'/view/'+question.link}}">{{question.title}}</a>
+                            <!--<span ng-bind="app.getDate(question.createdDate)" class="Unicode">0 giờ trước</span>-->
+                            <!--<span ng-bind="app.getName(question.createdBy)"></span>-->
+                            <!--<span>{{question.commentCount}} trả lời</span>-->
+                            <span ng-if="question.state === 'unseen'">
+                                <i class="fa fa-lg fa-exclamation-circle"></i>
+                            </span>
+
+                        </span>
+                    </div>
+                    <div class="control-icon" ng-if="!question.marked">
+                        <i ng-click="app.followPost(question)" class="fa fa-lg fa-star-o"></i>
+                    </div>
+                    <div class="control-icon" ng-if="question.marked">
+                        <i ng-click="app.unFollowPost(question)" class="checked fa fa-lg fa-star"
+                           style="position: relative">
+                            <i class="checked fa fa-lg fa-star"></i>
+                        </i>
+                    </div>
+                    <div class="control-icon last">
+                        <a ng-href="{{'/view/'+question.link}}"><i class="fa fa-lg fa-chevron-circle-right"></i></a>
+                    </div>
+                    <!--<div class="content-bind clickable" ng-init="showPreview = true" ng-click="showPreview = !showPreview">-->
+                    <div class="content-bind clickable" ng-init="showPreview = true">
+                        <div class="post-img" style="z-index: 99; text-align: center" ng-if="question.media.media_type === 'image/gif'">
+                            <video preload="none" poster="{{question.media.previewImageSrc}}" loop="" style="width: 100%; margin-left: auto; margin-right: auto; max-height: 500px">
+                                <source ng-src="{{question.media.webmSrc}}">
+                                <source ng-src="{{question.media.mp4Src}}">
+                            </video>
+                            <div class="play-button">
+                                <i class="fa fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="post-img" ng-if="question.media.media_type === 'image/jpeg' || question.media.media_type === 'image/bmp'|| question.media.media_type === 'image/png'">
+                            <a ng-href="{{'/view/'+question.link}}"><img ng-src="{{question.media.imageSrc}}"/></a>
+                        </div>
+                        <div class="post-img" ng-if="question.media.media_type === 'video/youtube'">
+                            <a ng-href="{{'/view/'+question.link}}">
+                                <img ng-src="https://img.youtube.com/vi/{{question.media.youtubeId}}/0.jpg"/>
+                                <span style="position: absolute;top: 50%; left: 50%; margin-top:-31px; margin-left:-45px; pointer-events:none;">
+                                    <img style="width: 90px" src="/ui/images/icons/YouTube-icon-full_color.png"/>
+                                </span>
+                            </a>
+                        </div>
+                        <div ng-bind-html="question.content"></div>
+                    </div>
+                    <div class="question-footer clearfix">
+                        <div class="meta-info pull-left">
+                            <!--<div class="info pull-left">-->
+                                <!--<i class="fa fa-lg fa-eye"></i>-->
+                                <!--<div class="pull-right">-->
+                                    <!--<div class="count-box">-->
+                                        <!--1000-->
+                                    <!--</div>-->
+                                    <!--<div class="count-box-nub"><s></s><i></i></div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="item info pull-left">-->
+                                <!--<i class="fa fa-lg fa-comments"></i>-->
+                                <!--<div class="pull-right">-->
+                                    <!--<div class="count-box">-->
+                                        <!--1000-->
+                                    <!--</div>-->
+                                    <!--<div class="count-box-nub"><s></s><i></i></div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        </div>
+                        <div class="control meta-info pull-right">
+                            <div class="info pull-left">
+                                <i class="fa fa-lg fa-eye"></i>
+                                <div class="pull-right">
+                                    <div class="count-box">
+                                        {{question.viewsCount}}
+                                    </div>
+                                    <div class="count-box-nub"><s></s><i></i></div>
+                                </div>
+                            </div>
+                            <div class="item info pull-left">
+                                <i class="fa fa-lg fa-comments"></i>
+                                <div class="pull-right">
+                                    <div class="count-box">
+                                        <fb:comments-count href=http://cuoithaga.com/view/{{::question.link}}/>0</fb:comments-count>
+                                    </div>
+                                    <div class="count-box-nub"><s></s><i></i></div>
+                                </div>
+                            </div>
+                            <div class="item pull-left">
+                                <div class="fb-like" data-href="http://cuoithaga.com/view/{{::question.link}}" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+                            </div>
+
+                            <!-- Logged in -->
+                            <div ng-if="app.currentUser && question.ratingStatus === app.NEGATIVE" class="item clickable pull-left">
+                                <button class="btn btn-xs btn-success rate-good-btn" ng-click="app.rateGoodQuestion(question)" >
+                                    <i class="fa fa-arrow-up"></i>
+                                    Hay
+                                </button>
+                                <button class="btn btn-xs btn-danger rate-bad-btn" ng-click="app.rateBadQuestion(question)" >
+                                    <i class="fa fa-arrow-down"></i>
+                                    Dở
+                                </button>
+                                <div class="pull-right">
+                                    <div class="count-box">
+                                        {{question.goodRatings.length - question.badRatings.length}}
+                                        điểm
+                                    </div>
+                                    <div class="count-box-nub"><s></s><i></i></div>
+                                </div>
+                            </div>
+
+                            <div ng-if="app.currentUser && (question.ratingStatus === app.GOOD || question.ratingStatus === app.BAD)" class="item clickable pull-right">
+                                <button ng-click="app.unRateQuestion(question)" class="btn btn-xs btn-success unrate-btn" ng-mouseover="showRemoveRating = true" ng-mouseleave="showRemoveRating = false" ng-if="question.ratingStatus === app.GOOD">
+                                    <span ng-show="!showRemoveRating">
+                                        <i class="fa fa-check"></i>
+                                        Đã đánh giá hay
+                                    </span>
+                                    <span ng-show="showRemoveRating">
+                                        <i class="fa fa-times"></i>
+                                        Bỏ đánh giá
+                                    </span>
+                                </button>
+                                <button ng-click="app.unRateQuestion(question)" class="btn btn-xs btn-danger unrate-btn" ng-mouseover="showRemoveRating = true" ng-mouseleave="showRemoveRating = false" ng-if="question.ratingStatus === app.BAD">
+                                    <span ng-show="!showRemoveRating">
+                                        <i class="fa fa-check"></i>
+                                        Đã đánh giá dở
+                                    </span>
+                                    <span ng-show="showRemoveRating">
+                                        <i class="fa fa-times"></i>
+                                        Bỏ đánh giá
+                                    </span>
+                                </button>
+                                <div class="pull-right">
+                                    <div class="count-box">
+                                        {{question.goodRatings.length - question.badRatings.length}}
+                                        điểm
+                                    </div>
+                                    <div class="count-box-nub"><s></s><i></i></div>
+                                </div>
+                            </div>
+                            <!-- End Logged in -->
+
+                            <!-- Didn't logged in yet -->
+                            <div ng-if="!app.currentUser" class="item clickable pull-left">
+                                <button class="btn btn-xs btn-success rate-good-btn" pop-over="/ui/templates/login.popup.template.html">
+                                    <i class="fa fa-arrow-up"></i>
+                                    Hay
+                                </button>
+                                <button class="btn btn-xs btn-danger rate-bad-btn" pop-over="/ui/templates/login.popup.template.html">
+                                    <i class="fa fa-arrow-down"></i>
+                                    Dở
+                                </button>
+                                <div class="pull-right">
+                                    <div class="count-box">
+                                        {{question.goodRatings.length - question.badRatings.length}}
+                                        điểm
+                                    </div>
+                                    <div class="count-box-nub"><s></s><i></i></div>
+                                </div>
+                            </div>
+                            <!-- End didn't logged in yet -->
+                        </div>
+                    </div>
+                </div>
+                <!-- display for each question -->
+            </div>
+        </div>
+    </div>
+    <div class="row load-more">
+        <div ng-show="app.loadingMore">
+            <i class="fa fa-2x fa-circle-o-notch fa-spin"></i>
+            <span>Đang tải thêm...</span>
+        </div>
+    </div>
+</div>

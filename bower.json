@@ -1,0 +1,19 @@
+{
+  "name": "bookzone",
+  "description": "Blue",
+  "version": "0.0.1",
+  "dependencies": {
+    "bootstrap": "*",
+    "angular": "*",
+    "angular-route": "*",
+    "font-awesome": "*",
+    "jquery": "*",
+    "ckeditor": "*",
+    "angular-sanitize": "*",
+    "ng-file-upload": "*",
+    "ng-table": "~0.3.3",
+    "angular-animate": "~1.3.1",
+    "angularjs-toaster": "~0.4.8",
+    "EaselJS": "*"
+  }
+}
